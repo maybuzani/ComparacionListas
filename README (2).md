@@ -419,30 +419,43 @@ las operaciones requeridas.
 
 ## 16. Preguntas de análisis
 
-1.  ¿Qué interfaz implementan tanto `ArrayList` como `LinkedList`? R.
-2.  ¿Cuál es la principal diferencia en su estructura interna? R.
-3.  ¿Por qué `ArrayList.get(i)` tiene complejidad O(1)? R.
-4.  ¿Por qué `LinkedList.get(i)` tiene complejidad O(n)?R. 
+1.  ¿Qué interfaz implementan tanto `ArrayList` como `LinkedList`?
+    la interfaz List<E>
+2.  ¿Cuál es la principal diferencia en su estructura interna?}
+    ArrayList utiliza un arreglo dinámico contiguo en memoria, mientras que LinkedList utiliza una estructura de nodos dobles enlazados donde cada nodo guarda una referencia al elemento
+3.  ¿Por qué `ArrayList.get(i)` tiene complejidad O(1)? Porque calcula directamente la dirección de memoria usando un índice del arreglo
+4.  ¿Por qué `LinkedList.get(i)` tiene complejidad O(n)?Porque no tiene acceso directo por índice. Para llegar al elemento i, debe comenzar en la cabeza (o cola) de la lista e ir saltando nodo por nodo 
 5.  ¿Qué ocurre internamente cuando se ejecuta
-    `ArrayList.add(0, elemento)`? R.
+    `ArrayList.add(0, elemento)`?
+    Java se ve obligado a desplazar todos los elementos existentes una posición a la derecha en memoria
 6.  ¿Por qué `LinkedList.add(0, elemento)` no necesita desplazar los
-    demás elementos?R.
+    demás elementos?
+    Porque únicamente crea un nuevo nodo en memoria
 7.  ¿Por qué afirmar que "`LinkedList` es mejor para inserciones" puede
-    ser incorrecto? R.
+    ser incorrecto?
+    Porque solo es más eficiente si la inserción se realiza en los extremos (inicio o final).
 8.  ¿Qué diferencia observó entre recorrer `LinkedList` mediante
-    `get(i)` y mediante `for-each`?R.
-9.  ¿Qué resultados obtuvo para inserciones al inicio?R.
-10. ¿Qué resultados obtuvo para inserciones al final?R.
+    `get(i)` y mediante `for-each`?
+    Con get(i), el tiempo fue altísimo debido a la complejidad cuadrática $O(N^2)$ al reiniciar la búsqueda desde el primer nodo en cada iteración. Con for-each, el tiempo bajó drásticamente a milisegundos ($O(N)$)
+9.  ¿Qué resultados obtuvo para inserciones al inicio?
+    LinkedList fue enormemente superior (~5.049 ms) comparado con ArrayList (~281.140 ms), confirmando la ventaja de evitar desplazamientos de memoria
+10. ¿Qué resultados obtuvo para inserciones al final?
+    Ambas obtuvieron tiempos muy bajos y similares (ArrayList ~8.181 ms vs. LinkedList ~9.551 ms), aunque ArrayList resultó ligeramente más rápido por no tener la sobrecarga de instanciar un nuevo objeto Node en cada paso
 11. ¿Los tiempos medidos coinciden exactamente con lo esperado a partir
-    de Big-O? Explique.R.
+    de Big-O? Explique.
+    Sí, la tendencia teórica se cumple. Las operaciones $O(1)$ mostraron tiempos en milisegundos muy bajos, mientras que las operaciones $O(N)$ repetidas o $O(N^2)$ mostraron incrementos drásticos en tiempo
 12. ¿Qué costo de memoria adicional tiene conceptualmente una lista
-    enlazada?R.
-13. ¿Qué ventajas proporciona programar contra `List`?R.
+    enlazada?
+    Además del objeto almacenado, cada nodo de LinkedList requiere overhead de memoria para almacenar dos punteros/referencias adicionales
+13. ¿Qué ventajas proporciona programar contra `List`?
+    Aplica el principio de polimorfismo, lo que permite cambiar la implementación concreta
 14. ¿Por qué `Deque` representa mejor el problema de la cola de
-    trabajos?R.
-15. ¿En qué escenario seleccionaría `ArrayList`?R.
-16. ¿En qué escenario tendría sentido utilizar `LinkedList`?R.
-
+    trabajos?
+    Porque la interfaz Deque (Double Ended Queue) define explícitamente métodos de inserción y extracción en ambos extremos
+15. ¿En qué escenario seleccionaría `ArrayList`?
+    Cuando el caso de uso requiera lecturas frecuentes o accesos aleatorios por índice, recorridos rápidos y baja sobrecarga de memoria, sin realizar inserciones o eliminaciones continuas en el inicio o medio de la lista
+16. ¿En qué escenario tendría sentido utilizar `LinkedList`?
+    Cuando se implementen estructuras tipo pila (stack) o cola/cola doble (queue/deque) donde las inserciones y eliminaciones se realicen únicamente en los extremos (inicio o fin) y no se requiera acceder por índice
 ## 17. Entregables
 
 ``` text
